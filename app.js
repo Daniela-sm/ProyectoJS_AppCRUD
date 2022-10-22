@@ -2,8 +2,8 @@
 showEmail();
 
 // define constants, locate id in html
-const emailInput = document.getElementById("emailInput");
-const saveEmailBtn = document.getElementById("saveEmailBtn");
+let emailInput = document.getElementById("emailInput");
+let saveEmailBtn = document.getElementById("saveEmailBtn");
 
 
 // make it save input when clicking on Save button
@@ -38,7 +38,8 @@ function showEmail(){
     }
     let html = '';
     let emailList = document.getElementById("emailList")
-    userEmail.forEach((item, index) => {
+    userEmail.forEach( (item, index) => {
+   
         html += `<tr>
                     <th scope="row">${index+1}</th>
                     <td>${item.email}</td>
@@ -48,3 +49,16 @@ function showEmail(){
     });
     emailList.innerHTML = html;
 }
+
+
+// delete email button for individual entries
+
+function deleteEmail(index){
+    let emailId = localStorage.getItem("localEmail");
+    let userEmail = JSON.parse(emailId);
+    // set our variables, ie for array in local storage, then splice (aka delete), update local storage and return output to our table
+    userEmail.splice(index, 1);
+    localStorage.setItem("localEmail", JSON.stringify(userEmail));
+    showEmail();
+}
+
