@@ -62,3 +62,43 @@ function deleteEmail(index){
     showEmail();
 }
 
+
+// updateEmail function => upon pressing update, return value to entry form, activate/deactivate buttons
+function editEmail(index){
+    let updateEmail = document.getElementById("updateEmail");
+    let saveEmailBtn = document.getElementById("saveEmailBtn");
+    let updateEmailBtn = document.getElementById("updateEmailBtn");
+    let emailId = localStorage.getItem("localEmail");
+    let userEmail = JSON.parse(emailId);
+
+    //in form return value stored, locates index and return value stored in the array
+    updateEmail.value = index;
+    emailInput.value = userEmail[index]['email'];
+
+    saveEmailBtn.style.display="none";
+    updateEmailBtn.style.display="inline-block";
+
+}
+
+// save Updated value, replaces old entry with the new one
+let updateEmailBtn = document.getElementById("updateEmailBtn");
+updateEmailBtn.addEventListener("click", function(e){
+    let saveEmailBtn = document.getElementById("saveEmailBtn");
+    let emailId = localStorage.getItem("localEmail");
+    let userEmail = JSON.parse(emailId);
+
+
+    let updateEmail = document.getElementById("updateEmail").value;
+
+    for (keys in userEmail[updateEmail]) {
+        if(keys == 'email'){
+            userEmail[updateEmail].email = emailInput.value;
+        }
+    }
+    
+    updateEmailBtn.style.display="none";
+    saveEmailBtn.style.display="inline-block";
+    localStorage.setItem("localEmail", JSON.stringify(userEmail));
+    emailInput.value = '';
+    showEmail();
+})
